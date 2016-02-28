@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0FC7EBF913C643679D215992 /* libPods-PocketForecast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2943E8EFE24EB5B86A64F3 /* libPods-PocketForecast.a */; };
+		422312A93EA077377AF08652 /* Pods_PocketForecastTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33923BD3638E6AC724D7100 /* Pods_PocketForecastTests.framework */; };
 		6B0DF79619CA9E28002EA435 /* NSError+PocketForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DF79519CA9E28002EA435 /* NSError+PocketForecast.swift */; };
 		6B2E1D9F18962CFB00BA4EE0 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B2E1D9E18962CFB00BA4EE0 /* libxml2.dylib */; };
 		6B2E1DA018962D0100BA4EE0 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B2E1D9E18962CFB00BA4EE0 /* libxml2.dylib */; };
@@ -94,7 +94,7 @@
 		BA798E82EF7D56A91CE6649A /* temperature_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = BA798AA1DEFB3C8006C73FBB /* temperature_circle.png */; };
 		BA798F7C02D6F939EC3FA0B6 /* icon_cloudy.png in Resources */ = {isa = PBXBuildFile; fileRef = BA798E6B7BCCED2C5A113449 /* icon_cloudy.png */; };
 		BA798FBE47D1FF07A7FB2A80 /* icon_cloudy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BA798DB9D6A187392B3C07C1 /* icon_cloudy@2x.png */; };
-		FC9D136326AD4C2DA9F61105 /* libPods-PocketForecastTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 609097971E734E02BFBD9A9C /* libPods-PocketForecastTests.a */; };
+		BC837BCF53FDF464EDFCC787 /* Pods_PocketForecast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E800E3AA114450DA7F4EF9CA /* Pods_PocketForecast.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,7 +109,6 @@
 
 /* Begin PBXFileReference section */
 		20D5CE93AAC778ED1CDF4B3A /* Pods-PocketForecastTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PocketForecastTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PocketForecastTests/Pods-PocketForecastTests.debug.xcconfig"; sourceTree = "<group>"; };
-		609097971E734E02BFBD9A9C /* libPods-PocketForecastTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PocketForecastTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B0DF79519CA9E28002EA435 /* NSError+PocketForecast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+PocketForecast.swift"; sourceTree = "<group>"; };
 		6B2E1D9E18962CFB00BA4EE0 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		6B2E5BE419C87081000F31B4 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +165,7 @@
 		6BE9747115AF01A3004472E2 /* SenTestingKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		7D3466ECF0B4C819A183980C /* Pods-PocketForecast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PocketForecast.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PocketForecast/Pods-PocketForecast.debug.xcconfig"; sourceTree = "<group>"; };
 		90D24B791A95A45F00E96432 /* PocketForecast-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PocketForecast-Bridging-Header.h"; sourceTree = "<group>"; };
+		A33923BD3638E6AC724D7100 /* Pods_PocketForecastTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PocketForecastTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA7980D610AB0AE04C4A3E99 /* icon_partly_cloudy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_partly_cloudy.png; sourceTree = "<group>"; };
 		BA798162CA41E6D4902A2BD5 /* icon_rainy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_rainy@2x.png"; sourceTree = "<group>"; };
 		BA7981A0F0B7E0735109ABD3 /* bg5-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg5-568h@2x.png"; sourceTree = "<group>"; };
@@ -203,8 +203,8 @@
 		BA798FABE8F822F7C4C37589 /* icon_partly_cloudy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_partly_cloudy@2x.png"; sourceTree = "<group>"; };
 		D66BEDF42E2D2178575565FF /* Pods-PocketForecastTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PocketForecastTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PocketForecastTests/Pods-PocketForecastTests.release.xcconfig"; sourceTree = "<group>"; };
 		E4467A75CA1D458DB9901CA3 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E800E3AA114450DA7F4EF9CA /* Pods_PocketForecast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PocketForecast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1463C00AFA7828EE44A1773 /* Pods-PocketForecast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PocketForecast.release.xcconfig"; path = "Pods/Target Support Files/Pods-PocketForecast/Pods-PocketForecast.release.xcconfig"; sourceTree = "<group>"; };
-		FD2943E8EFE24EB5B86A64F3 /* libPods-PocketForecast.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PocketForecast.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,7 +216,7 @@
 				6BD5116A1880E794009C487A /* XCTest.framework in Frameworks */,
 				6BD5116C1880E794009C487A /* UIKit.framework in Frameworks */,
 				6BD5116B1880E794009C487A /* Foundation.framework in Frameworks */,
-				FC9D136326AD4C2DA9F61105 /* libPods-PocketForecastTests.a in Frameworks */,
+				422312A93EA077377AF08652 /* Pods_PocketForecastTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,7 +229,7 @@
 				6BE9745415AF01A3004472E2 /* UIKit.framework in Frameworks */,
 				6BE9745615AF01A3004472E2 /* Foundation.framework in Frameworks */,
 				6BE9745815AF01A3004472E2 /* CoreGraphics.framework in Frameworks */,
-				0FC7EBF913C643679D215992 /* libPods-PocketForecast.a in Frameworks */,
+				BC837BCF53FDF464EDFCC787 /* Pods_PocketForecast.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,10 +298,10 @@
 				6BE9745515AF01A3004472E2 /* Foundation.framework */,
 				6BE9745715AF01A3004472E2 /* CoreGraphics.framework */,
 				6BE9747115AF01A3004472E2 /* SenTestingKit.framework */,
-				FD2943E8EFE24EB5B86A64F3 /* libPods-PocketForecast.a */,
-				609097971E734E02BFBD9A9C /* libPods-PocketForecastTests.a */,
 				6BC1C67B1880DE0100A9B367 /* XCTest.framework */,
 				E4467A75CA1D458DB9901CA3 /* libPods-Tests.a */,
+				E800E3AA114450DA7F4EF9CA /* Pods_PocketForecast.framework */,
+				A33923BD3638E6AC724D7100 /* Pods_PocketForecastTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -583,6 +583,7 @@
 				6BD511661880E794009C487A /* Frameworks */,
 				6BD511671880E794009C487A /* Resources */,
 				AF4C7AB3E69344549F0F9AA3 /* Copy Pods Resources */,
+				2F0540E3428ED9FF25547FBD /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -603,6 +604,7 @@
 				6BE9744C15AF01A3004472E2 /* Frameworks */,
 				6BE9744D15AF01A3004472E2 /* Resources */,
 				8CBDFD0C214E4C8881741781 /* Copy Pods Resources */,
+				1AC3D3FA545D0406B50467B5 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -715,6 +717,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1AC3D3FA545D0406B50467B5 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PocketForecast/Pods-PocketForecast-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2F0540E3428ED9FF25547FBD /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PocketForecastTests/Pods-PocketForecastTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		8CBDFD0C214E4C8881741781 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1033,7 +1065,7 @@
 				GCC_PREFIX_HEADER = "PocketForecast/PocketForecast-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "PocketForecast/PocketForecast-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1069,7 +1101,7 @@
 				GCC_PREFIX_HEADER = "PocketForecast/PocketForecast-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "PocketForecast/PocketForecast-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (

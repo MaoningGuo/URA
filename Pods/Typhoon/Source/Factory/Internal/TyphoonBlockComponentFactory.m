@@ -17,7 +17,14 @@
 #import "OCLogTemplate.h"
 #import "TyphoonAssembly+TyphoonAssemblyFriend.h"
 #import "TyphoonAssemblyPropertyInjectionPostProcessor.h"
+#import "TyphoonDefinition+Internal.h"
 #import "TyphoonIntrospectionUtils.h"
+#import "TyphoonTypeConverterRegistry.h"
+#import "TyphoonTypeConverter.h"
+#import "TyphoonInstancePostProcessor.h"
+#import "TyphoonComponentFactory+TyphoonDefinitionRegisterer.h"
+#import "TyphoonPreattachedComponentsRegisterer.h"
+#import "TyphoonMemoryManagementUtils.h"
 
 @interface TyphoonComponentFactory (Private)
 
@@ -27,8 +34,8 @@
 
 @end
 
-@implementation TyphoonBlockComponentFactory
 
+@implementation TyphoonBlockComponentFactory
 
 //-------------------------------------------------------------------------------------------
 #pragma mark - Class Methods
@@ -57,10 +64,16 @@
 {
     self = [super init];
     if (self) {
-        [self attachPostProcessor:[TyphoonAssemblyPropertyInjectionPostProcessor new]];
+        [self attachDefinitionPostProcessor:[TyphoonAssemblyPropertyInjectionPostProcessor new]];
+        TyphoonPreattachedComponentsRegisterer *preattachedComponentsRegisterer = [[TyphoonPreattachedComponentsRegisterer alloc] initWithComponentFactory:self];
+        
         for (TyphoonAssembly *assembly in assemblies) {
+            [preattachedComponentsRegisterer doRegistrationForAssembly:assembly];
             [self buildAssembly:assembly];
+            [assembly activateWithFactory:self collaborators:[NSSet setWithArray:assemblies]];
         }
+        
+        [TyphoonMemoryManagementUtils makeFactory:self retainAssemblies:[NSSet setWithArray:assemblies]];
     }
     return self;
 }
@@ -120,9 +133,17 @@
     if ([self respondsToSelector:aSelector]) {
         return [[self class] instanceMethodSignatureForSelector:aSelector];
     }
-    else {
-        return [TyphoonIntrospectionUtils methodSignatureWithArgumentsAndReturnValueAsObjectsFromSelector:aSelector];
+    
+    NSString *componentKey = NSStringFromSelector(aSelector);
+    TyphoonDefinition *definition = [self definitionForKey:componentKey];
+    TyphoonAssembly *assembly = definition.assembly;
+    
+    if (assembly) {
+        return [assembly methodSignatureForSelector:aSelector];
     }
+    
+    // Last resort.
+    return [TyphoonIntrospectionUtils methodSignatureWithArgumentsAndReturnValueAsObjectsFromSelector:aSelector];
 }
 
 @end

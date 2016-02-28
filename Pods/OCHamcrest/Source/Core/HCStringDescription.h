@@ -1,5 +1,5 @@
 //  OCHamcrest by Jon Reid, http://qualitycoding.org/about/
-//  Copyright 2015 hamcrest.org. See LICENSE.txt
+//  Copyright 2016 hamcrest.org. See LICENSE.txt
 
 #import <OCHamcrest/HCBaseDescription.h>
 
@@ -7,7 +7,7 @@
 
 
 /*!
- * @brief An @ref HCDescription that is stored as a string.
+ * @abstract An @ref HCDescription that is stored as a string.
  */
 @interface HCStringDescription : HCBaseDescription
 {
@@ -15,19 +15,19 @@
 }
 
 /*!
- * @brief Returns the description of an HCSelfDescribing object as a string.
+ * @abstract Returns the description of an HCSelfDescribing object as a string.
  * @param selfDescribing The object to be described.
  * @return The description of the object.
  */
-+ (NSString *)stringFrom:(id<HCSelfDescribing>)selfDescribing;
++ (NSString *)stringFrom:(id <HCSelfDescribing>)selfDescribing;
 
 /*!
- * @brief Creates and returns an empty description.
+ * @abstract Creates and returns an empty description.
  */
 + (instancetype)stringDescription;
 
 /*!
- * @brief Initializes a newly allocated HCStringDescription that is initially empty.
+ * @abstract Initializes a newly allocated HCStringDescription that is initially empty.
  */
 - (instancetype)init;
 

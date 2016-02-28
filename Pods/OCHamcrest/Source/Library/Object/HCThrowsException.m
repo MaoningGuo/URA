@@ -1,5 +1,5 @@
 //  OCHamcrest by Jon Reid, http://qualitycoding.org/about/
-//  Copyright 2015 hamcrest.org. See LICENSE.txt
+//  Copyright 2016 hamcrest.org. See LICENSE.txt
 
 #import "HCThrowsException.h"
 
@@ -69,7 +69,7 @@ static void HCRequireMatcher(id obj)
     return [item isKindOfClass:blockClass];
 }
 
-- (void)describeTo:(id<HCDescription>)description
+- (void)describeTo:(id <HCDescription>)description
 {
     [[description appendText:@"a block with no arguments, throwing an exception which is "]
             appendDescriptionOf:self.exceptionMatcher];

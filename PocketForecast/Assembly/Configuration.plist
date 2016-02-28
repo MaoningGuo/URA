@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>service.url</key>
-	<string>NSURL(http://finance.yahoo.com/d/quotes)</string>
+	<string>https://www.quandl.com/api/v3/datasets/WIKI/</string>
 	<key>api.key</key>
 	<string>cd3017c94c9236e6e7c7c310877a6</string>
 	<key>days.to.retrieve</key>

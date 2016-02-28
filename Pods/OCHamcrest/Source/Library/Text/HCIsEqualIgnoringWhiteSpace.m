@@ -1,5 +1,5 @@
 //  OCHamcrest by Jon Reid, http://qualitycoding.org/about/
-//  Copyright 2015 hamcrest.org. See LICENSE.txt
+//  Copyright 2016 hamcrest.org. See LICENSE.txt
 
 #import "HCIsEqualIgnoringWhiteSpace.h"
 
@@ -8,7 +8,7 @@
 
 static void removeTrailingSpace(NSMutableString *string)
 {
-    NSUInteger length = [string length];
+    NSUInteger length = string.length;
     if (length > 0)
     {
         NSUInteger charIndex = length - 1;
@@ -19,9 +19,9 @@ static void removeTrailingSpace(NSMutableString *string)
 
 static NSMutableString *stripSpace(NSString *string)
 {
-    NSUInteger length = [string length];
+    NSUInteger length = string.length;
     NSMutableString *result = [NSMutableString stringWithCapacity:length];
-    bool lastWasSpace = true;
+    BOOL lastWasSpace = YES;
     for (NSUInteger charIndex = 0; charIndex < length; ++charIndex)
     {
         unichar character = [string characterAtIndex:charIndex];
@@ -29,12 +29,12 @@ static NSMutableString *stripSpace(NSString *string)
         {
             if (!lastWasSpace)
                 [result appendString:@" "];
-            lastWasSpace = true;
+            lastWasSpace = YES;
         }
         else
         {
             [result appendFormat:@"%C", character];
-            lastWasSpace = false;
+            lastWasSpace = NO;
         }
     }
 
@@ -49,11 +49,6 @@ static NSMutableString *stripSpace(NSString *string)
 @end
 
 @implementation HCIsEqualIgnoringWhiteSpace
-
-+ (instancetype)isEqualIgnoringWhiteSpace:(NSString *)string
-{
-    return [[self alloc] initWithString:string];
-}
 
 - (instancetype)initWithString:(NSString *)string
 {
@@ -76,7 +71,7 @@ static NSMutableString *stripSpace(NSString *string)
     return [self.strippedString isEqualToString:stripSpace(item)];
 }
 
-- (void)describeTo:(id<HCDescription>)description
+- (void)describeTo:(id <HCDescription>)description
 {
     [[description appendDescriptionOf:self.originalString]
                   appendText:@" ignoring whitespace"];
@@ -85,7 +80,7 @@ static NSMutableString *stripSpace(NSString *string)
 @end
 
 
-id HC_equalToIgnoringWhiteSpace(NSString *aString)
+id HC_equalToIgnoringWhiteSpace(NSString *expectedString)
 {
-    return [HCIsEqualIgnoringWhiteSpace isEqualIgnoringWhiteSpace:aString];
+    return [[HCIsEqualIgnoringWhiteSpace alloc] initWithString:expectedString];
 }

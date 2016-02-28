@@ -1,5 +1,9 @@
+EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Expecta" "${PODS_ROOT}/Headers/Public/ICLoader" "${PODS_ROOT}/Headers/Public/NGAParallaxMotion" "${PODS_ROOT}/Headers/Public/NSURL+QueryDictionary" "${PODS_ROOT}/Headers/Public/NanoFrame" "${PODS_ROOT}/Headers/Public/OCHamcrest" "${PODS_ROOT}/Headers/Public/OCLogTemplate" "${PODS_ROOT}/Headers/Public/OCMockito" "${PODS_ROOT}/Headers/Public/PaperFold" "${PODS_ROOT}/Headers/Public/Typhoon"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Expecta" -isystem "${PODS_ROOT}/Headers/Public/ICLoader" -isystem "${PODS_ROOT}/Headers/Public/NGAParallaxMotion" -isystem "${PODS_ROOT}/Headers/Public/NSURL+QueryDictionary" -isystem "${PODS_ROOT}/Headers/Public/NanoFrame" -isystem "${PODS_ROOT}/Headers/Public/OCHamcrest" -isystem "${PODS_ROOT}/Headers/Public/OCLogTemplate" -isystem "${PODS_ROOT}/Headers/Public/OCMockito" -isystem "${PODS_ROOT}/Headers/Public/PaperFold" -isystem "${PODS_ROOT}/Headers/Public/Typhoon"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"ICLoader" -l"NGAParallaxMotion" -l"NSURL+QueryDictionary" -l"NanoFrame" -l"PaperFold" -l"Typhoon" -framework "Foundation" -framework "QuartzCore" -framework "UIKit"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/OCLogTemplate"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/ICLoader.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/NGAParallaxMotion.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/NSURL_QueryDictionary.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/NanoFrame.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/PaperFold.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/SwiftCSV.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Typhoon.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/OCLogTemplate"
+OTHER_LDFLAGS = $(inherited) -framework "ICLoader" -framework "NGAParallaxMotion" -framework "NSURL_QueryDictionary" -framework "NanoFrame" -framework "PaperFold" -framework "SwiftCSV" -framework "Typhoon"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
+PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods-PocketForecast
 PODS_ROOT = ${SRCROOT}/Pods

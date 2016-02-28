@@ -25,17 +25,20 @@
 #import "OCLogTemplate.h"
 #import "TyphoonBlockComponentFactory.h"
 #import "TyphoonCollaboratingAssembliesCollector.h"
+#import "TyphoonConfigPostProcessor.h"
+#import "TyphoonMemoryManagementUtils.h"
 
 static NSMutableSet *reservedSelectorsAsStrings;
 
 @interface TyphoonAssembly () <TyphoonObjectWithCustomInjection>
 
 @property(readwrite) NSSet *definitionSelectors;
+@property(readwrite) NSArray *preattachedInfrastructureComponents;
 
 @property(readwrite) NSDictionary *assemblyClassPerDefinitionKey;
 
 @property(readonly) TyphoonAssemblyAdviser *adviser;
-@property(readonly) TyphoonComponentFactory *factory;
+@property(readonly, unsafe_unretained) TyphoonComponentFactory *factory;
 @property(readonly) TyphoonCollaboratingAssembliesCollector *collector;
 
 @end
@@ -123,6 +126,7 @@ static NSMutableSet *reservedSelectorsAsStrings;
         _definitionBuilder = [[TyphoonAssemblyDefinitionBuilder alloc] initWithAssembly:self];
         _adviser = [[TyphoonAssemblyAdviser alloc] initWithAssembly:self];
         _collector = [[TyphoonCollaboratingAssembliesCollector alloc] initWithAssemblyClass:[self class]];
+        _preattachedInfrastructureComponents = [NSArray array];
         
         [self proxyCollaboratingAssembliesPriorToActivation];
     }
@@ -197,12 +201,32 @@ static NSMutableSet *reservedSelectorsAsStrings;
     [_factory makeDefault];
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 - (void)attachPostProcessor:(id <TyphoonDefinitionPostProcessor>)postProcessor {
+    [self attachDefinitionPostProcessor:postProcessor];
+}
+#pragma clang diagnostic pop
+
+- (void)attachDefinitionPostProcessor:(id <TyphoonDefinitionPostProcessor>)postProcessor {
     if (!_factory) {
-        [NSException raise:NSInternalInconsistencyException
-                    format:@"attachPostProcessor: requires the assembly to be activated."];
+        [self preattachInfrastructureComponent:postProcessor];
     }
-    [_factory attachPostProcessor:postProcessor];
+    [_factory attachDefinitionPostProcessor:postProcessor];
+}
+
+- (void)attachInstancePostProcessor:(id<TyphoonInstancePostProcessor>)postProcessor {
+    if (!_factory) {
+        [self preattachInfrastructureComponent:postProcessor];
+    }
+    [_factory attachInstancePostProcessor:postProcessor];
+}
+
+- (void)attachTypeConverter:(id<TyphoonTypeConverter>)typeConverter {
+    if (!_factory) {
+        [self preattachInfrastructureComponent:typeConverter];
+    }
+    [_factory attachTypeConverter:typeConverter];
 }
 
 - (id)objectForKeyedSubscript:(id)key {
@@ -221,7 +245,19 @@ static NSMutableSet *reservedSelectorsAsStrings;
     return [self activateWithCollaboratingAssemblies:nil];
 }
 
+- (instancetype)activateWithConfigResourceName:(NSString *)resourceName {
+    TyphoonConfigPostProcessor *processor = [TyphoonConfigPostProcessor processor];
+    [processor useResourceWithName:resourceName];
+    return [self activateWithCollaboratingAssemblies:nil postProcessors:@[processor]];
+}
+
 - (instancetype)activateWithCollaboratingAssemblies:(NSArray *)assemblies {
+    return [self activateWithCollaboratingAssemblies:assemblies postProcessors:nil];
+}
+
+- (instancetype)activateWithCollaboratingAssemblies:(NSArray *)assemblies postProcessors:(NSArray *)postProcessors {
+    [self attachProcessors:postProcessors];
+
     NSMutableSet *reconciledAssemblies = [NSMutableSet setWithArray:[@[self] arrayByAddingObjectsFromArray:assemblies]];
     NSMutableSet *assembliesToRemove = [[NSMutableSet alloc] init];
 
@@ -249,17 +285,20 @@ static NSMutableSet *reservedSelectorsAsStrings;
 
     TyphoonBlockComponentFactory *factory = [TyphoonBlockComponentFactory factoryWithAssemblies:
             [reconciledAssemblies allObjects]];
-    for (TyphoonAssembly *assembly in reconciledAssemblies) {
-        [assembly activateWithFactory:factory collaborators:reconciledAssemblies];
-    }
+    [TyphoonMemoryManagementUtils makeAssemblies:reconciledAssemblies retainFactory:factory];
     return self;
 }
-
 
 
 //-------------------------------------------------------------------------------------------
 #pragma mark - Private Methods
 //-------------------------------------------------------------------------------------------
+
+- (void)attachProcessors:(NSArray *)postProcessors {
+    for (id<TyphoonDefinitionPostProcessor> processor in postProcessors) {
+        [self attachDefinitionPostProcessor:processor];
+    }
+}
 
 - (void)proxyCollaboratingAssembliesPriorToActivation {
     TyphoonCollaboratingAssemblyPropertyEnumerator *enumerator = [[TyphoonCollaboratingAssemblyPropertyEnumerator alloc]
@@ -272,6 +311,7 @@ static NSMutableSet *reservedSelectorsAsStrings;
 
 - (void)activateWithFactory:(TyphoonComponentFactory *)factory collaborators:(NSSet *)collaborators {
     _factory = factory;
+    
     for (NSString *propertyName in [self typhoonPropertiesUpToParentClass:[TyphoonAssembly class]]) {
         TyphoonTypeDescriptor *descriptor = [self typhoonTypeForPropertyNamed:propertyName];
         if (descriptor.typeBeingDescribed == [TyphoonAssembly class]) {
@@ -333,5 +373,8 @@ static NSMutableSet *reservedSelectorsAsStrings;
     }
 }
 
+- (void)preattachInfrastructureComponent:(id)component {
+    _preattachedInfrastructureComponents = [_preattachedInfrastructureComponents arrayByAddingObject:component];
+}
 
 @end

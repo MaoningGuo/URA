@@ -1,4 +1,6 @@
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
+use_frameworks!
 
 target :PocketForecast, :exclusive => true do
     
@@ -6,6 +8,7 @@ target :PocketForecast, :exclusive => true do
     
 
     pod 'ICLoader'
+    pod 'SwiftCSV'
     pod 'NGAParallaxMotion'
     pod 'NSURL+QueryDictionary'
     pod 'OCLogTemplate'

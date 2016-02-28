@@ -10,11 +10,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 import Foundation
+import SwiftCSV
 
 public class WeatherClientBasicImpl: NSObject, WeatherClient {
 
     var weatherReportDao: WeatherReportDao?
-    var serviceUrl: NSURL?
+    var serviceUrl: NSString?
     var daysToRetrieve: NSNumber?
 
     var apiKey: String? {
@@ -30,13 +31,19 @@ public class WeatherClientBasicImpl: NSObject, WeatherClient {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
             let url = self.queryURLold(city)
             let data : NSData! = NSData(contentsOfURL: url)!
+            let csvString = String(data: data, encoding: NSUTF8StringEncoding);
             
-            let newStr = String(data: data, encoding: NSUTF8StringEncoding);
-            NSLog(newStr!);
-            let strArr = newStr!.characters.split {$0 == ","}.map { String($0) }
-            let stockName = strArr[0];
-            let stockPrice1 = strArr[1];
-            let stockPrice2 = strArr[2];
+            let csv = CSV(string: csvString!);
+            
+            let closePrices = csv.columns["close"];
+            NSLog((closePrices?.joinWithSeparator("\n"))!);
+            
+            
+//            NSLog(newStr!);
+//            let strArr = newStr!.characters.split {$0 == ","}.map { String($0) }
+//            let stockName = strArr[0];
+//            let stockPrice1 = strArr[1];
+//            let stockPrice2 = strArr[2];
             
             let dictionary = (try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)) as! NSDictionary
 
@@ -52,9 +59,9 @@ public class WeatherClientBasicImpl: NSObject, WeatherClient {
                     successBlock(weatherReport)
                     return
                 }
-                NSLog(stockName);
-                NSLog(stockPrice1);
-                NSLog(stockPrice2);
+//                NSLog(stockName);
+//                NSLog(stockPrice1);
+//                NSLog(stockPrice2);
 
             }
         }
@@ -66,9 +73,16 @@ public class WeatherClientBasicImpl: NSObject, WeatherClient {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
             let url = self.queryURL(city)
             let data : NSData! = NSData(contentsOfURL: url)!
+
+            let csvString = String(data: data, encoding: NSUTF8StringEncoding);
+            
+            let csv = CSV(string: csvString!);
+            
+            let closePrices = csv.columns["Close"];
+            NSLog((closePrices?.joinWithSeparator("\n"))!);
             
             let newStr = String(data: data, encoding: NSUTF8StringEncoding);
-            NSLog(newStr!);
+//            NSLog(newStr!);
             var strArr = newStr!.characters.split {$0 == ","}.map { String($0) }
             
             let stockName = strArr[0];
@@ -104,16 +118,17 @@ public class WeatherClientBasicImpl: NSObject, WeatherClient {
 
     private func queryURL(city: String) -> NSURL {
 
-        let serviceUrl: NSURL = self.serviceUrl!
-        let url: NSURL = serviceUrl.uq_URLByAppendingQueryDictionary([
-          //  ?s=AAPL&f=nab
-                "s": city,
-                "format": "json",
-                "f": "nab"
-              //  "key": apiKey!
-        ])
+        let serviceUrl: NSString = self.serviceUrl!
+        let fullServiceUrl: NSURL = NSURL(string: ((serviceUrl as String) + city + ".csv"))!;
+//        let url: NSURL = serviceUrl.uq_URLByAppendingQueryDictionary([
+//          //  ?s=AAPL&f=nab
+//                "s": city,
+//                "format": "json",
+//                "f": "nab"
+//              //  "key": apiKey!
+//        ])
 
-        return url
+        return fullServiceUrl
     }
     
     private func queryURLold(city: String) -> NSURL {
