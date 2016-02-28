@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>service.url</key>
+	<string>NSURL(http://finance.yahoo.com/d/quotes)</string>
+	<key>api.key</key>
+	<string>cd3017c94c9236e6e7c7c310877a6</string>
+	<key>days.to.retrieve</key>
+	<string>NSNumber(5)</string>
+</dict>
+</plist>
