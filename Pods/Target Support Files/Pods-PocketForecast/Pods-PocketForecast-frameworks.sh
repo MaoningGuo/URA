@@ -84,6 +84,7 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-PocketForecast/Charts.framework"
   install_framework "Pods-PocketForecast/ICLoader.framework"
   install_framework "Pods-PocketForecast/NGAParallaxMotion.framework"
   install_framework "Pods-PocketForecast/NSURL_QueryDictionary.framework"
@@ -93,6 +94,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-PocketForecast/Typhoon.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-PocketForecast/Charts.framework"
   install_framework "Pods-PocketForecast/ICLoader.framework"
   install_framework "Pods-PocketForecast/NGAParallaxMotion.framework"
   install_framework "Pods-PocketForecast/NSURL_QueryDictionary.framework"

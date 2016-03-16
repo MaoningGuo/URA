@@ -11,6 +11,7 @@
 
 import Foundation
 import SwiftCSV
+import Charts
 
 public class WeatherClientBasicImpl: NSObject, WeatherClient {
 
@@ -36,7 +37,7 @@ public class WeatherClientBasicImpl: NSObject, WeatherClient {
             let csv = CSV(string: csvString!);
             
             let closePrices = csv.columns["close"];
-            NSLog((closePrices?.joinWithSeparator("\n"))!);
+          //  NSLog((closePrices?.joinWithSeparator("\n"))!);
             
             
 //            NSLog(newStr!);
@@ -75,11 +76,11 @@ public class WeatherClientBasicImpl: NSObject, WeatherClient {
             let data : NSData! = NSData(contentsOfURL: url)!
 
             let csvString = String(data: data, encoding: NSUTF8StringEncoding);
+         
+         //   let csv = CSV(string: csvString!);
             
-            let csv = CSV(string: csvString!);
-            
-            let closePrices = csv.columns["Close"];
-            NSLog((closePrices?.joinWithSeparator("\n"))!);
+        //    let closePrices = csv.columns["Close"];
+          //  NSLog((closePrices?.joinWithSeparator("\n"))!);
             
             let newStr = String(data: data, encoding: NSUTF8StringEncoding);
 //            NSLog(newStr!);

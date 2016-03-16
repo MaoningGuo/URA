@@ -19,7 +19,7 @@ class AddCityViewController: UIViewController, UITextFieldDelegate, Themeable {
     var weatherClient : WeatherClient!
     var theme : Theme!
     var rootViewController : RootViewController!
-    
+        
     //Interface Builder injected properties
     
     @IBOutlet var nameOfCityToAdd: UITextField!
@@ -67,8 +67,12 @@ class AddCityViewController: UIViewController, UITextFieldDelegate, Themeable {
             self.weatherClient.loadStock(self.nameOfCityToAdd.text, onSuccess: {
                 (resultStock) in
              //   NSLog(resultStock!);
+                var chartTestView : ChartViewController!
+                chartTestView = ChartViewController(nibName: "chart", bundle: nil);
+                self.view.addSubview(chartTestView.view);
+                
                 self.cityDao!.saveCity(resultStock[3])
-                self.rootViewController.dismissAddCitiesController()
+               // self.rootViewController.dismissAddCitiesController()
                 
                 }, onError: {
                     (message) in
@@ -77,10 +81,6 @@ class AddCityViewController: UIViewController, UITextFieldDelegate, Themeable {
                     self.nameOfCityToAdd.enabled = true
                     self.validationMessage.text = String(format: "No weather reports for '%@'.", self.nameOfCityToAdd.text!)
             })
-            
-            
-            
-            
             
         }
         else {

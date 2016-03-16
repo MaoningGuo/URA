@@ -11,15 +11,9 @@
 
 
 #import "TyphoonBlockDefinition.h"
+#import "TyphoonBlockDefinition+Internal.h"
 #import "TyphoonDefinition+Infrastructure.h"
 #import "TyphoonBlockDefinitionController.h"
-
-@interface TyphoonBlockDefinition ()
-
-@property (nonatomic, assign) BOOL hasInitializerBlock;
-
-@end
-
 
 @implementation TyphoonBlockDefinition
 
@@ -88,9 +82,12 @@
         {
             TyphoonBlockDefinition *definition = [[TyphoonBlockDefinition alloc] initWithClass:clazz key:nil];
             definition.hasInitializerBlock = initializer != nil;
+            definition.hasInjectionsBlock = injections != nil;
+            
             if (configuration) {
                 configuration(definition);
             }
+            
             return definition;
         }
             
@@ -119,12 +116,12 @@
 
 - (TyphoonMethod *)initializer
 {
-    return nil;
+    return self.hasInitializerBlock ? nil : [super initializer];
 }
 
 - (BOOL)isInitializerGenerated
 {
-    return !self.hasInitializerBlock;
+    return self.hasInitializerBlock ? NO : [super isInitializerGenerated];
 }
 
 #pragma mark - NSCopying

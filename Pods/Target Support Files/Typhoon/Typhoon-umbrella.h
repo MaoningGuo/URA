@@ -45,6 +45,7 @@
 #import "Collections+CustomInjection.h"
 #import "NSDictionary+CustomInjection.h"
 #import "TyphoonBlockDefinition+InstanceBuilder.h"
+#import "TyphoonBlockDefinition+Internal.h"
 #import "TyphoonBlockDefinitionController.h"
 #import "TyphoonDefinition+InstanceBuilder.h"
 #import "TyphoonDefinition+Internal.h"

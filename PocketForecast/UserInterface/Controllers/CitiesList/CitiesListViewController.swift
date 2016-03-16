@@ -120,7 +120,8 @@ public class CitiesListViewController : UIViewController, UITableViewDelegate, U
     private dynamic func addCity() {
         
         let rootViewController = self.assembly.rootViewController() as! RootViewController
-        rootViewController.showAddCitiesController()
+        rootViewController.showParameterListController()
+      //  rootViewController.showAddCitiesController()
     }
     
     private func refreshCitiesList() {

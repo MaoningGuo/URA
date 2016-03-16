@@ -1,4 +1,7 @@
 PODS:
+  - Charts (2.2.3):
+    - Charts/Core (= 2.2.3)
+  - Charts/Core (2.2.3)
   - Expecta (0.2.4)
   - ICLoader (1.0.4):
     - NanoFrame
@@ -16,6 +19,7 @@ PODS:
   - Typhoon/no-arc (HEAD based on 3.4.5)
 
 DEPENDENCIES:
+  - Charts
   - Expecta (~> 0.2.1)
   - ICLoader
   - NGAParallaxMotion
@@ -38,6 +42,7 @@ CHECKOUT OPTIONS:
     :tag: 1.2-no-gesture-recognizers
 
 SPEC CHECKSUMS:
+  Charts: f54267bb3f0f0e74520c6f248517cf5074dfd6fc
   Expecta: cfaf1d3e2e194ca704a25e997093d30a1ce70b61
   ICLoader: 00592dc70b66252d58981369b42be47b668968c8
   NanoFrame: a1dabbac9994eeea5e6289ec8201d5752a01cd21

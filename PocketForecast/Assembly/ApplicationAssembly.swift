@@ -130,8 +130,29 @@ public class ApplicationAssembly: TyphoonAssembly {
             definition.injectProperty("theme", with: self.themeAssembly.currentTheme())
             definition.injectProperty("rootViewController", with: self.rootViewController())
         }
-
-
+    }
+    
+    public dynamic func addParameterViewController() -> AnyObject {
+        
+        return TyphoonDefinition.withClass(ParameterViewController.self) {
+            (definition) in
+            
+            // TODO: Seems sub-class MUST override this initializer otherwise it can't be
+            // TODO: invoked in RELEASE configuration. Bug?
+           definition.useInitializer("initWithNibName:bundle:") {
+           (initializer) in
+                
+          initializer.injectParameterWith("parameter")
+                initializer.injectParameterWith(NSBundle.mainBundle())
+           }
+            
+            
+            
+          //  definition.injectProperty("cityDao", with: self.coreComponents.cityDao())
+          //  definition.injectProperty("weatherClient", with: self.coreComponents.weatherClient())
+            definition.injectProperty("theme", with: self.themeAssembly.currentTheme())
+            definition.injectProperty("rootViewController", with: self.rootViewController())
+        }
     }
 
 

@@ -11,6 +11,7 @@
 
 
 #import "TyphoonBlockDefinition+InstanceBuilder.h"
+#import "TyphoonBlockDefinition+Internal.h"
 #import "TyphoonDefinition+Internal.h"
 #import "TyphoonDefinition+InstanceBuilder.h"
 #import "TyphoonDefinition+Infrastructure.h"
@@ -29,9 +30,7 @@ TYPHOON_LINK_CATEGORY(TyphoonBlockDefinition_InstanceBuilder)
 
 - (id)initializeInstanceWithArgs:(TyphoonRuntimeArguments *)args factory:(TyphoonComponentFactory *)factory
 {
-    if (self.initializerGenerated) {
-        return [super initializeInstanceWithArgs:args factory:factory];
-    } else {
+    if (self.hasInitializerBlock) {
         TyphoonInjectionContext *context = [[TyphoonInjectionContext alloc] initWithFactory:factory args:args
                                                                    raiseExceptionIfCircular:YES];
         context.classUnderConstruction = self.type;
@@ -44,17 +43,22 @@ TYPHOON_LINK_CATEGORY(TyphoonBlockDefinition_InstanceBuilder)
         
         return instance;
     }
+    else {
+        return [super initializeInstanceWithArgs:args factory:factory];
+    }
 }
 
 - (void)doInjectionEventsOn:(id)instance withArgs:(TyphoonRuntimeArguments *)args factory:(TyphoonComponentFactory *)factory
 {
-    TyphoonInjectionContext *context = [[TyphoonInjectionContext alloc] initWithFactory:factory args:args
-                                                               raiseExceptionIfCircular:NO];
-    context.classUnderConstruction = self.type;
+    if (self.hasInjectionsBlock) {
+        TyphoonInjectionContext *context = [[TyphoonInjectionContext alloc] initWithFactory:factory args:args
+                                                                   raiseExceptionIfCircular:NO];
+        context.classUnderConstruction = self.type;
     
-    [[TyphoonBlockDefinitionController currentController] useInjectionsRouteWithDefinition:self instance:instance injectionContext:context withinBlock:^{
-        [self invokeAssemblySelector];
-    }];
+        [[TyphoonBlockDefinitionController currentController] useInjectionsRouteWithDefinition:self instance:instance injectionContext:context withinBlock:^{
+            [self invokeAssemblySelector];
+        }];
+    }
     
     [super doInjectionEventsOn:instance withArgs:args factory:factory];
 }

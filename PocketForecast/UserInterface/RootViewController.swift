@@ -37,6 +37,7 @@ public class RootViewController : UIViewController, PaperFoldViewDelegate {
 
     private var citiesListController : UIViewController?
     private var addCitiesController : UIViewController?
+    private var parameterViewController : UIViewController?
     
     
     //-------------------------------------------------------------------------------------------
@@ -108,6 +109,43 @@ public class RootViewController : UIViewController, PaperFoldViewDelegate {
             self.sideViewState = SideViewState.Hidden
             self.paperFoldView.setPaperFoldState(PaperFoldStateDefault)
             self.navigator!.topViewController!.viewWillAppear(true)
+        }
+    }
+    
+    public func showParameterListController() {
+        if (self.parameterViewController == nil) {
+            self.navigator.topViewController!.view.userInteractionEnabled = false
+            
+            self.parameterViewController = UINavigationController(rootViewController: self.assembly.addParameterViewController() as! UIViewController)
+            
+            self.parameterViewController!.view.frame = CGRectMake(0, self.view.frame.origin.y + self.view.frame.size.height, SIDE_CONTROLLER_WIDTH, self.view.frame.size.height)
+            self.view.addSubview(self.parameterViewController!.view)
+            
+            UIView.transitionWithView(self.view, duration: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+         
+                self.parameterViewController!.view.frame = CGRectMake(0, 0, self.SIDE_CONTROLLER_WIDTH, self.view.frame.size.height)
+                
+                }, completion: nil)
+        }
+    }
+    
+    public func dismissParameterListController() {
+        if (self.parameterViewController != nil) {
+            self.parameterViewController?.viewWillAppear(true)
+            UIView.transitionWithView(self.view, duration: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                
+                self.parameterViewController!.view.frame = CGRectMake(0, self.view.frame.size.height, self.SIDE_CONTROLLER_WIDTH, self.view.frame.size.height)
+                
+                }, completion: {
+                    (completed) in
+                    
+                    self.parameterViewController!.view.removeFromSuperview()
+                    self.parameterViewController = nil
+                    self.citiesListController?.viewDidAppear(true)
+                    self.navigator.topViewController!.view.userInteractionEnabled = true
+                    let rootViewController = self.assembly.rootViewController() as! RootViewController
+                 //   rootViewController.showAddCitiesController()
+            })
         }
     }
 

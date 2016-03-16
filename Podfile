@@ -6,7 +6,7 @@ target :PocketForecast, :exclusive => true do
     
     pod 'Typhoon', :head
     
-
+    pod 'Charts'
     pod 'ICLoader'
     pod 'SwiftCSV'
     pod 'NGAParallaxMotion'
