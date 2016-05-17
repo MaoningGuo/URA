@@ -24,6 +24,8 @@ public class WeatherReportView : UIView, UITableViewDelegate, UITableViewDataSou
     private var lastUpdateLabel : UILabel!
     private var tableView : UITableView!
     
+    private var stockView : UIView!
+    
     public var toolbar : UIToolbar!
     
     public var weatherReport : WeatherReport? {
@@ -39,10 +41,28 @@ public class WeatherReportView : UIView, UITableViewDelegate, UITableViewDataSou
                     NSIndexPath(forRow: 2, inSection: 0)
                 ]
                 self.tableView.reloadData()
-                self.cityNameLabel.text = weatherReport!.cityDisplayName
-                self.temperatureLabel.text = weatherReport!.currentConditions.temperature!.asShortStringInDefaultUnits()
-                self.conditionsDescriptionLabel.text = weatherReport!.currentConditions.longSummary()
+                self.cityNameLabel.text = weatherReport!.stock.stockName
+                var parameters : [String]
+                parameters = weatherReport!.stock.stockParameter!;
+                self.temperatureLabel.text = "Parameters" + parameters[0] + parameters[1] + parameters[2];
+                    //weatherReport!.currentConditions.temperature!.asShortStringInDefaultUnits()
+                self.conditionsDescriptionLabel.text = "Initial Cash : " + parameters[0]
+                    //+ "  RF : " + parameters[1] +
+                  //  "  P : " + parameters[2];
+                    // weatherReport!.currentConditions.longSummary()
                 self.lastUpdateLabel.text = NSString(format: "Updated %@", weatherReport!.reportDateAsString()) as? String
+                self.stockView = weatherReport!.stock.stockView;
+                if (stockView != nil) {
+                    var chartTestView : ChartViewController!
+                    chartTestView = ChartViewController(nibName: "chart", bundle: nil, prices : weatherReport!.stock.stockData,dates:weatherReport!.stock.stockDates);
+                    chartTestView.view.frame = CGRectMake(0,130,320,150)
+                    self.addSubview(chartTestView.view);
+                    
+                    var chartTestView2 : ChartViewController!
+                    chartTestView2 = ChartViewController(nibName: "chart", bundle: nil, prices : weatherReport!.stock.stockData,dates:weatherReport!.stock.stockDates);
+                        chartTestView2.view.frame = CGRectMake(0,320,320,150);
+                    self.addSubview(chartTestView2.view);
+                }
 
             }
         }
@@ -73,6 +93,7 @@ public class WeatherReportView : UIView, UITableViewDelegate, UITableViewDataSou
         self.initTableView()
         self.initToolbar()
         self.initLastUpdateLabel()
+        self.initStockVew()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -96,6 +117,7 @@ public class WeatherReportView : UIView, UITableViewDelegate, UITableViewDataSou
         self.toolbar.frame = CGRectMake(0, self.frame.size.height - self.toolbar.frame.size.height, self.frame.size.width, self.toolbar.frame.size.height)
         self.tableView.frame = CGRectMake(0, self.frame.size.height - self.toolbar.frame.size.height - 150, 320, 150)
         self.lastUpdateLabel.frame = self.toolbar.bounds
+       // self.stockView.frame = CGRectMake(0,0,320,320)
 
         
     }
@@ -111,7 +133,7 @@ public class WeatherReportView : UIView, UITableViewDelegate, UITableViewDataSou
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 1
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -162,6 +184,12 @@ public class WeatherReportView : UIView, UITableViewDelegate, UITableViewDataSou
         self.backgroundView.contentMode = UIViewContentMode.ScaleToFill
         self.backgroundView.parallaxIntensity = 20
         self.addSubview(self.backgroundView)
+    }
+    
+    private func initStockVew() {
+        if (stockView != nil) {
+          self.addSubview(self.stockView);
+        }
     }
     
     private func initCityNameLabel() {

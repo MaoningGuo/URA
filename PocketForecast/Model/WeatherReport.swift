@@ -17,7 +17,8 @@ public class WeatherReport : NSObject, NSCoding {
     public private(set) var date : NSDate
     public private(set) var currentConditions : CurrentConditions
     public private(set) var forecast : Array<ForecastConditions>
-    
+    public private(set) var stock : StockReport
+
     public var cityDisplayName : String {
         var displayName : String
         let components : Array<String> = self.city.componentsSeparatedByString(",")
@@ -33,12 +34,13 @@ public class WeatherReport : NSObject, NSCoding {
     
     
     public init(city : String, date : NSDate, currentConditions : CurrentConditions,
-        forecast : Array<ForecastConditions>) {
+        forecast : Array<ForecastConditions>, stock : StockReport) {
         
         self.city = city
         self.date = date
         self.currentConditions = currentConditions
         self.forecast = forecast
+            self.stock = stock;
     }
     
     public required init?(coder : NSCoder) {
@@ -46,6 +48,7 @@ public class WeatherReport : NSObject, NSCoding {
         self.date = coder.decodeObjectForKey("date") as! NSDate
         self.currentConditions = coder.decodeObjectForKey("currentConditions") as! CurrentConditions
         self.forecast = coder.decodeObjectForKey("forecast") as! Array<ForecastConditions>
+        self.stock = coder.decodeObjectForKey("stock") as! StockReport
     }
     
     public func setCityCos(name : String) {
@@ -55,6 +58,14 @@ public class WeatherReport : NSObject, NSCoding {
     public func setPrices(price1 : String, price2 : String) {
     
         self.currentConditions.setPrice(price1, price2: price2);
+    }
+    
+    public func setCityName(name : String) {
+        self.city = name;
+    }
+    
+    public func setStockcustom(stock : StockReport) {
+        self.stock = stock;
     }
 
     
@@ -75,6 +86,7 @@ public class WeatherReport : NSObject, NSCoding {
         coder.encodeObject(self.date, forKey:"date")
         coder.encodeObject(self.currentConditions, forKey:"currentConditions")
         coder.encodeObject(self.forecast, forKey:"forecast")
+        coder.encodeObject(self.stock, forKey:"stock")
 
     }
 

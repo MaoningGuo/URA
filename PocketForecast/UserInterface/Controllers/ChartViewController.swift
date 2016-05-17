@@ -15,6 +15,11 @@ class ChartViewController: UIViewController {
     
     @IBOutlet var lineChartView: LineChartView?
     
+    @IBOutlet var label : UILabel?;
+    
+    var prices = [Double]()
+    var dates = [String]()
+   // var graphTitle = "";
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +33,24 @@ class ChartViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!,
+        prices : [Double]!, dates : [String]!) {
+        self.prices = prices;
+        self.dates = dates;
+       // self.graphTitle = graphTitle;
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     internal func someStuff() {
         var months: [String]!
         
-        months = ["Feb 29", "Mar 1", "Mar 2", "Mar 4", "Mar 4", "Mar 7", "Mar 8", "Mar 9", "Mar 10", "Mar 11", "Mar 14", "Mar 15"]
-        let unitsSold = [697.77	, 718.81, 718.85, 712.42, 710.89, 695.16, 693.97, 705.24, 712.82, 726.82, 730.49, 728.33]
+        months = dates;
+        var unitsSold = self.prices;
+        unitsSold = unitsSold.reverse();
         
         func setChart(dataPoints: [String], values: [Double]) {
             
@@ -62,10 +80,13 @@ class ChartViewController: UIViewController {
             //  pieChartDataSet.colors = colors
             
             
-            let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "GOOG")
-          //  lineChartDataSet.colors = colors;
+            let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: "Prices")
+            lineChartDataSet.circleRadius = 0.07//2.0
+            lineChartDataSet.setColor(UIColor.blueColor().colorWithAlphaComponent(0.5))
             let lineChartData = LineChartData(xVals: dataPoints, dataSet: lineChartDataSet)
             lineChartView!.data = lineChartData
+            lineChartView!.animate(xAxisDuration: 2.0, yAxisDuration: 2.0);
+            lineChartView!.descriptionText = "365 Days"
             
             
         }

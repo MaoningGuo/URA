@@ -18,11 +18,7 @@ public class CityDaoUserDefaultsImpl : NSObject, CityDao {
     let currentCityKey = "pfWeather.currentCityKey"
     
     let defaultCities = [
-        "Manila",
-        "Madrid",
-        "San Francisco",
-        "Phnom Penh",
-        "Omsk"
+        "GOOG"
     ]
     
     
@@ -48,7 +44,7 @@ public class CityDaoUserDefaultsImpl : NSObject, CityDao {
         
         var savedCities : Array? = self.defaults.arrayForKey(self.citiesListKey)
         if (savedCities == nil) {
-            savedCities = defaultCities
+            savedCities = defaultCities as [AnyObject]
         }
         
         let cities = NSMutableArray(array: savedCities!)
@@ -59,7 +55,7 @@ public class CityDaoUserDefaultsImpl : NSObject, CityDao {
                 canAddCity = false
             }
         }
-        if (canAddCity) {
+        if (true) {
             cities.addObject(trimmedName)
             self.defaults.setObject(cities, forKey: self.citiesListKey)
         }

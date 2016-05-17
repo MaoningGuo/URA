@@ -10,7 +10,6 @@ import UIKit
 
 class ParameterViewController : UIViewController, UITextFieldDelegate,Themeable {
     
-    
 
     @IBOutlet weak var initCash: UITextField!
     @IBOutlet weak var rfRate: UITextField!

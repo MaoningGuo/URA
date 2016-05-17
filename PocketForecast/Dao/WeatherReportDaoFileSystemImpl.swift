@@ -22,7 +22,7 @@ public class WeatherReportDaoFileSystemImpl : NSObject, WeatherReportDao {
     
     public func saveReport(weatherReport: WeatherReport!) {
         
-        NSKeyedArchiver.archiveRootObject(weatherReport, toFile: self.filePathFor(weatherReport.cityDisplayName))
+        NSKeyedArchiver.archiveRootObject(weatherReport, toFile: self.filePathFor(weatherReport.city))
     }
 
     

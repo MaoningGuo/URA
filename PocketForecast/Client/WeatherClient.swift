@@ -17,7 +17,7 @@ import Foundation
 @objc public protocol WeatherClient {
     
     func loadWeatherReportFor(city: String!, onSuccess successBlock: ((WeatherReport!) -> Void)!, onError errorBlock: ((String!) -> Void)!)
-    func loadStock(city: String!, onSuccess successBlock: ((Array<String>) -> Void)!, onError errorBlock: ((String!) -> Void)!)
+    func loadStock(city: String!, parameters : [String], onSuccess successBlock: ((WeatherReport?) -> Void)!, onError errorBlock: ((String!) -> Void)!)
     
     
     

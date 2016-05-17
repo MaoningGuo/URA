@@ -109,7 +109,7 @@ public class WeatherReportViewController: UIViewController {
     private dynamic func refreshData() {
         ICLoader.present()
         
-        if (cityName?.containsString("AAPL") == false) {
+       /* if (cityName?.containsString("GOOG") == false) {
         
         self.weatherClient.loadWeatherReportFor(self.cityName, onSuccess: {
             (weatherReport) in
@@ -123,36 +123,21 @@ public class WeatherReportViewController: UIViewController {
                 ICLoader.dismiss()
                 print ("Error" + message)
                 
-                
+        
         })
+        } */
+        var parameters : [String];
+        parameters = ["1","1","1"]
+        if (weatherReport != nil) {
+           parameters = (self.weatherReport?.stock.stockParameter)!;
         }
         
-        self.weatherClient.loadStock(self.cityName, onSuccess: {
-            (stockArr) in
-            
-            var receivedReport : WeatherReport?
-            
-            self.weatherClient.loadWeatherReportFor("Manila", onSuccess: {
-                (weatherReport) in
+        self.weatherClient.loadStock(self.cityName, parameters: parameters, onSuccess: {
+            (weatherReport) in
+        
                 
-                receivedReport = weatherReport
-                let makeUpStock = receivedReport;
-                if stockArr[0] != "N/A" { makeUpStock!.setCityCos(stockArr[0]);}
-                if stockArr[1] != "N/A" && stockArr[2] != "N/A" {
-                    makeUpStock?.setPrices(stockArr[1], price2: stockArr[2]);
-                }
-                //  makeUpStock?. = stockName;
-                //makeUpStock?.cityDisplayName = stockName;
-                
-                self.weatherReportView.weatherReport = makeUpStock;
+                self.weatherReportView.weatherReport = weatherReport;
 
-                
-                }, onError: {
-                    (message) in
-                    
-                    print("Unexpected error: " + message)
-            })
-            
             
             ICLoader.dismiss()
             

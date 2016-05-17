@@ -34,7 +34,9 @@ extension NSDictionary {
         for item in self.valueForKeyPath("data.weather") as! NSArray {
             forecastConditions.append(item.toForecastConditions())
         }
-        return WeatherReport(city: city, date: NSDate(), currentConditions: currentConditions, forecast: forecastConditions)
+        let stock = StockReport(stockSymbol: "",stockName: "",stockView: nil,
+            stockParameter: [],stockData: [],stockDates: []);
+        return WeatherReport(city: city, date: NSDate(), currentConditions: currentConditions, forecast: forecastConditions,stock: stock)
     }
     
     public func toCurrentConditions() -> CurrentConditions {

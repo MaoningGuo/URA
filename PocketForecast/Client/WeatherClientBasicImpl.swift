@@ -13,7 +13,7 @@ import Foundation
 import SwiftCSV
 import Charts
 
-public class WeatherClientBasicImpl: NSObject, WeatherClient {
+public class WeatherClientBasicImpl: NSObject , WeatherClient{
 
     var weatherReportDao: WeatherReportDao?
     var serviceUrl: NSString?
@@ -68,8 +68,8 @@ public class WeatherClientBasicImpl: NSObject, WeatherClient {
         }
     }
     
-    public func loadStock(city: String!, onSuccess successBlock: ((Array<String>) -> Void)!, onError errorBlock: ((String!) -> Void)!) {
-        
+    public func loadStock(city: String!, parameters : [String], onSuccess successBlock: ((WeatherReport?) -> Void)!, onError errorBlock: ((String!) -> Void)!) {
+
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
             let url = self.queryURL(city)
@@ -77,14 +77,23 @@ public class WeatherClientBasicImpl: NSObject, WeatherClient {
 
             let csvString = String(data: data, encoding: NSUTF8StringEncoding);
          
-         //   let csv = CSV(string: csvString!);
+            let csv = CSV(string: csvString!);
             
-        //    let closePrices = csv.columns["Close"];
+            let closePrices = csv.columns["Close"];
+            let dates = csv.columns["Date"];
           //  NSLog((closePrices?.joinWithSeparator("\n"))!);
             
             let newStr = String(data: data, encoding: NSUTF8StringEncoding);
 //            NSLog(newStr!);
             var strArr = newStr!.characters.split {$0 == ","}.map { String($0) }
+            
+            var prices = [Double]()
+            
+            for var index = 0; index < 365; ++index{
+                let dd = Double(closePrices![index])!;
+                prices.append(dd);
+            }
+            
             
             let stockName = strArr[0];
             let stockPrice1 = strArr[1];
@@ -94,18 +103,30 @@ public class WeatherClientBasicImpl: NSObject, WeatherClient {
             myArr[1] = stockPrice1;
             myArr[2] = stockPrice2;
             myArr[3] = city;
-
             
+            var chartTestView : ChartViewController!
+            chartTestView = ChartViewController(nibName: "chart", bundle: nil,prices: prices,dates : dates);
+            var charView : UIView;
+            charView = chartTestView.view;
+            let stock = StockReport(stockSymbol: city,stockName: city, stockView: charView,stockParameter: parameters,stockData: prices,stockDates: dates!);
+            let jsonData = TyphoonBundleResource.withName("SampleForecast.json", inBundle: NSBundle(forClass: self.classForCoder)).data
+            
+            let dictionary = (try! NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers))
+                as! NSDictionary
+    
             if stockName.characters.count == 0 {
                 dispatch_async(dispatch_get_main_queue()) {
                     errorBlock("error");
                     return
                 }
             } else {
-                ////let weatherReport: WeatherReport = dictionary.toWeatherReport()
-             //   self.weatherReportDao!.saveReport(weatherReport)
+                let weatherReport: WeatherReport = dictionary.toWeatherReport()
+                weatherReport.setStockcustom(stock);// stock = stock;
+                weatherReport.setCityName(city);
+                
+                self.weatherReportDao!.saveReport(weatherReport)
                 dispatch_async(dispatch_get_main_queue()) {
-                    successBlock(myArr)
+                    successBlock(weatherReport)
                     return
                 }
                 NSLog(stockName);
@@ -120,7 +141,7 @@ public class WeatherClientBasicImpl: NSObject, WeatherClient {
     private func queryURL(city: String) -> NSURL {
 
         let serviceUrl: NSString = self.serviceUrl!
-        let fullServiceUrl: NSURL = NSURL(string: ((serviceUrl as String) + city + ".csv"))!;
+        let fullServiceUrl: NSURL = NSURL(string: ((serviceUrl as String) + city + ".csv" + "?rows=365"))!;
 //        let url: NSURL = serviceUrl.uq_URLByAppendingQueryDictionary([
 //          //  ?s=AAPL&f=nab
 //                "s": city,

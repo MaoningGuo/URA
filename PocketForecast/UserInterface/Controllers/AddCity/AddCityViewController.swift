@@ -19,8 +19,12 @@ class AddCityViewController: UIViewController, UITextFieldDelegate, Themeable {
     var weatherClient : WeatherClient!
     var theme : Theme!
     var rootViewController : RootViewController!
+    var stock : StockReport!
         
     //Interface Builder injected properties
+    @IBOutlet weak var initCash: UITextField!
+    @IBOutlet weak var rfRate: UITextField!
+    @IBOutlet weak var percentage: UITextField!
     
     @IBOutlet var nameOfCityToAdd: UITextField!
     @IBOutlet var validationMessage : UILabel!
@@ -63,16 +67,18 @@ class AddCityViewController: UIViewController, UITextFieldDelegate, Themeable {
             self.validationMessage.hidden = false
             self.nameOfCityToAdd.enabled = false
             self.spinner.startAnimating()
+            var parameters : [String]
+            parameters = [initCash.text!,rfRate.text!,percentage.text!];
             
-            self.weatherClient.loadStock(self.nameOfCityToAdd.text, onSuccess: {
+            self.weatherClient.loadStock(self.nameOfCityToAdd.text, parameters: parameters, onSuccess: {
                 (resultStock) in
              //   NSLog(resultStock!);
-                var chartTestView : ChartViewController!
-                chartTestView = ChartViewController(nibName: "chart", bundle: nil);
-                self.view.addSubview(chartTestView.view);
+            // var chartTestView : ChartViewController!
+               // chartTestView = ChartViewController(nibName: "chart", bundle: nil);
+              //  self.view.addSubview(chartTestView.view);
                 
-                self.cityDao!.saveCity(resultStock[3])
-               // self.rootViewController.dismissAddCitiesController()
+                self.cityDao!.saveCity(resultStock?.stock.stockSymbol)
+                self.rootViewController.dismissAddCitiesController()
                 
                 }, onError: {
                     (message) in
