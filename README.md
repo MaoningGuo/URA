@@ -1,5 +1,55 @@
-Pocket Forecast (Swift)
+Stock Simulations IOS (Swift)
 ==========================
+
+This project is for simulating various methods in computational finance area. The project is an IOS application and the purpose of this project is to evaluate and compare different portfolio management methods in a portable way. 
+
+Now the project supports two platforms, IOS and Android. This repository is for the IOS version for the research application. The project is built on a weather forecasting application demo for Swift. To understand how the application works, I recommend to read the original document for the weather forecasting application following by this session. 
+
+###Features: 
+
+* Validates stock symbols 
+* Graphs the stock prices  
+* Parameter view to enable simulation parameters
+* Stores the list of portfolio simulations 
+* Haves multiple simulations for one stock in the application
+* Displays both graphs for stock prices and simulations for comparison
+
+###User Guide: 
+
+1.	Click on Add stock
+2.	Put a legal stock symbol in the searching box
+3.	Type parameters in
+4.	View the stock simulations
+
+###Technical Notes: 
+
+API : The stock prices are pulled from https://www.quandl.com/blog/api-for-stock-data API. The application should show how this API works. Notice that the free tier for this API is very limited (50 times per day), may consider to change it to Yahoo API later. 
+
+Graphing library: 
+Here is the instructions for using the graph library
+http://www.appcoda.com/ios-charts-api-tutorial/
+
+Some classes to read: 
+PocketForecast/Model/StockReport   -  Model for the stock report
+PocketForecast/Client/WeatherClientBasicImpl.swift  Implementation for backend data
+PocketForecast/UserInterface/Controllers/   UI implementations
+
+###TO DO:
+
+1.	I am not super familiar with IOS development. Please correct my implementation in a Swift or IOS way. 
+2.	Catch the error if the stock symbol is not valid
+3.	Store the graph and display the graph instead of calling API again
+4.	Remove other unrelated weather stuff
+5.	Perform the simulation parts
+
+
+
+
+
+
+### Original Weather Doc
+
+
 
 An example application built with <a href ="http://typhoonframework.org/">Typhoon</a>.
 
